@@ -1,0 +1,16 @@
+.contact-list-container {
+    margin: 20px;
+  }
+  
+  .mat-elevation-z8 {
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  }
+.action-buttons-container {
+    display: flex;
+    align-items: center; 
+    height: 100%; 
+  }
+  
+  .action-buttons-container button {
+    margin: 0; 
+  }
