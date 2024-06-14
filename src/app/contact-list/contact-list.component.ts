@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -24,6 +24,8 @@ export class ContactListComponent implements OnInit {
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
+  @Output() openContactFormEvent = new EventEmitter<any>();
+
   constructor(private store: Store<{ contacts: ContactState }>,private dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -45,6 +47,16 @@ export class ContactListComponent implements OnInit {
   handlePageEvent(event: PageEvent): void {
     this.paginator.pageIndex = event.pageIndex;
     this.paginator.pageSize = event.pageSize;
+  }
+  openContactForm(){
+    this.openContactFormEvent.emit();
+  }
+
+  applyFilter(filterValue:any): void {
+    this.dataSource.filter = filterValue.target.value.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
   editContact(contact: Contact): void {
     const dialogRef = this.dialog.open(ContactFormComponent, {
